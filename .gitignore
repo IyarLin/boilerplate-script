@@ -1,0 +1,9 @@
+*.csv
+*.RData
+*.rdb
+*.rdx
+*.rds
+*__packages
+*.Rhistory
+# Also include some exception files
+!reference_table_which_renders_nicely_on_github.csv
