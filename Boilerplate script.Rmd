@@ -13,21 +13,17 @@ knitr::opts_chunk$set(echo = T, warning = F, message = F, cache = T)
 set.seed(1)
 options(scipen = 999)
 
+if (!require("pacman")) install.packages("pacman")
+
 packages <- c(
   "tidyverse", # best thing that happend to me
   "dbplyr", # dplyr syntax for DB query
-  "data.table", # working with a large number of groups requires this
-  "glmnet", # cv.glmnet
-  "glmnetUtils" # formula interface to glmnet!
+  "data.table", # only way to run grouped calculations on tons of groups
+  "pander" # pretty table rendering
 )
 
-sapply(
-  packages,
-  function(x) if (!require(x, character.only = TRUE, quietly = T)) {
-      install.packages(x, quiet = T, verbose = F)
-      library(x, character.only = T, quietly = T, verbose = F)
-    }
-)
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(char = packages)
 ```
 
 # Load data
@@ -35,10 +31,18 @@ sapply(
 ```{r be sure to label chunks in an informative way}
 source("../passwords.R") # never post your passwords to Github again!
 
-
 ```
 
 # Don't be afraid to add headers along the report  
 ## They'll all show up in the table of contents!  
 
+# There's also plots and tables all around
+
+```{r show a plot}
+plot(mtcars$mpg, mtcars$cyl)
+```
+
+```{r show a table}
+pandoc.table(head(mtcars[, 1:4]))
+```
 
