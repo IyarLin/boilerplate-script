@@ -42,7 +42,7 @@ source("../passwords.R") # never post your passwords to Github again!
 plot(mtcars$mpg, mtcars$cyl)
 ```
 
-```{r show a table}
+```{r show a table, results="asis"}
 pandoc.table(head(mtcars[, 1:4]))
 ```
 
