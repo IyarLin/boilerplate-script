@@ -1,0 +1,100 @@
+---
+title: "Novel research that will disrupt the industry"
+author: "Mr scientist"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  github_document:
+    toc: true
+    toc_depth: 2
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, warning = F, message = F, cache = T)
+set.seed(1)
+options(scipen = 999)
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(char = c(
+  "tidyverse", # best thing that happend to me
+  "dbplyr", # dplyr syntax for DB query
+  "data.table", # only way to run grouped calculations on tons of groups
+  "pander", # pretty table rendering
+  "gt" # even prittier table rendering
+))
+```
+
+<br>
+
+# Load data
+
+```{r be sure to label chunks in an informative way, eval = F}
+source("../passwords.R") # never post your passwords to Github again!
+```
+
+# Don't be afraid to add headers along the report  
+<br>
+
+## They'll all show up in the table of contents!  
+<br>
+
+# There's also plots and tables all around
+
+```{r show a plot}
+plot(mtcars$mpg, mtcars$cyl)
+```
+
+```{r show a table, results="asis"}
+pandoc.table(head(mtcars[, 1:4]))
+```
+
+<br>
+
+## gt tables in github_document
+
+I've also found a nice workaround to incorporate tables from the **gt** package.
+
+You can create the table object:
+
+```{r create gt table}
+# Define the start and end dates for the data range
+start_date <- "2010-06-07"
+end_date <- "2010-06-14"
+
+# Create a gt table based on preprocessed
+# `sp500` table data
+
+a = sp500 %>%
+  dplyr::filter(date >= start_date & date <= end_date) %>%
+  dplyr::select(-adj_close) %>%
+  gt() %>%
+  tab_header(
+    title = "S&P 500",
+    subtitle = glue::glue("{start_date} to {end_date}")
+  ) %>%
+  fmt_date(
+    columns = vars(date),
+    date_style = 3
+  ) %>%
+  fmt_currency(
+    columns = vars(open, high, low, close),
+    currency = "USD"
+  ) %>%
+  fmt_number(
+    columns = vars(volume),
+    suffixing = TRUE
+  ) 
+```
+
+And then at some point you can also view it using the `gt::gtsave` function:
+
+```{r show gt table, hide=T}
+gtsave(a, "try.png")
+```
+
+We next remove the resulting pic:
+
+```{r remove gt table pic}
+invisible(file.remove("try.png"))
+```
+
+It's a little shorter and easier to implement then inserting the resulting pic using standard markdown.
