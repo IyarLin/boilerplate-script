@@ -1,7 +1,7 @@
 Novel research that will disrupt the industry
 ================
 Mr scientist
-11 April, 2020
+26 May, 2020
 
   - [Load data](#load-data)
   - [Don’t be afraid to add headers along the
@@ -10,6 +10,9 @@ Mr scientist
         contents\!](#theyll-all-show-up-in-the-table-of-contents)
   - [There’s also plots and tables all
     around](#theres-also-plots-and-tables-all-around)
+  - [Another cool option is doing code
+    folding](#another-cool-option-is-doing-code-folding)
+      - [Like this\!](#like-this)
       - [gt tables in github\_document](#gt-tables-in-github_document)
 
 <br>
@@ -50,6 +53,26 @@ pandoc.table(head(mtcars[, 1:4]))
 |      **Valiant**      | 18.1 |  6  | 225  | 105 |
 
 <br>
+
+# Another cool option is doing code folding
+
+<details>
+
+<summary>SOME CODE</summary>
+
+<p>
+
+#### Like this\!
+
+``` r
+print("source: https://gist.github.com/joyrexus/16041f2426450e73f5df9391f7f7ae5f")
+```
+
+    ## [1] "source: https://gist.github.com/joyrexus/16041f2426450e73f5df9391f7f7ae5f"
+
+</p>
+
+</details>
 
 ## gt tables in github\_document
 

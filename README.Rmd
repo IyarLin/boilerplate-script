@@ -49,6 +49,20 @@ pandoc.table(head(mtcars[, 1:4]))
 
 <br>
 
+# Another cool option is doing code folding
+
+<details><summary>SOME CODE</summary>
+<p>
+
+#### Like this!
+
+```{r}
+print("source: https://gist.github.com/joyrexus/16041f2426450e73f5df9391f7f7ae5f")
+```
+
+</p>
+</details>
+
 ## gt tables in github_document
 
 I've also found a nice workaround to incorporate tables from the **gt** package.
