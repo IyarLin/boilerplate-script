@@ -6,6 +6,7 @@ output:
   github_document:
     toc: true
     toc_depth: 2
+    pandoc_args: --webtex
 ---
 
 ```{r setup, include=FALSE}
@@ -18,8 +19,7 @@ pacman::p_load(char = c(
   "tidyverse", # best thing that happend to me
   "dbplyr", # dplyr syntax for DB query
   "data.table", # only way to run grouped calculations on tons of groups
-  "pander", # pretty table rendering
-  "gt" # even prittier table rendering
+  "pander" # pretty table rendering
 ))
 ```
 
@@ -63,52 +63,18 @@ print("source: https://gist.github.com/joyrexus/16041f2426450e73f5df9391f7f7ae5f
 </p>
 </details>
 
-## gt tables in github_document
+# Rendering Latex
 
-I've also found a nice workaround to incorporate tables from the **gt** package.
+You can render Latex on a github document by specifying in the YAML header:
 
-You can create the table object:
-
-```{r create gt table}
-# Define the start and end dates for the data range
-start_date <- "2010-06-07"
-end_date <- "2010-06-14"
-
-# Create a gt table based on preprocessed
-# `sp500` table data
-
-a = sp500 %>%
-  dplyr::filter(date >= start_date & date <= end_date) %>%
-  dplyr::select(-adj_close) %>%
-  gt() %>%
-  tab_header(
-    title = "S&P 500",
-    subtitle = glue::glue("{start_date} to {end_date}")
-  ) %>%
-  fmt_date(
-    columns = vars(date),
-    date_style = 3
-  ) %>%
-  fmt_currency(
-    columns = vars(open, high, low, close),
-    currency = "USD"
-  ) %>%
-  fmt_number(
-    columns = vars(volume),
-    suffixing = TRUE
-  ) 
+```{r, eval=F}
+output:
+  github_document:
+    pandoc_args: --webtex
 ```
 
-And then at some point you can also view it using the `gt::gtsave` function:
+Here's an example:
 
-```{r show gt table, hide=T}
-gtsave(a, "try.png")
-```
-
-We next remove the resulting pic:
-
-```{r remove gt table pic}
-invisible(file.remove("try.png"))
-```
-
-It's a little shorter and easier to implement then inserting the resulting pic using standard markdown.
+$$
+X \sim \mathcal{N}(\mu,\sigma^2) \rightarrow f(x)= \frac{1}{\sigma \sqrt{2\pi}}e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}
+$$

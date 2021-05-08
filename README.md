@@ -1,19 +1,18 @@
 Novel research that will disrupt the industry
 ================
 Mr scientist
-26 May, 2020
+08 May, 2021
 
-  - [Load data](#load-data)
-  - [Don’t be afraid to add headers along the
+-   [Load data](#load-data)
+-   [Don’t be afraid to add headers along the
     report](#dont-be-afraid-to-add-headers-along-the-report)
-      - [They’ll all show up in the table of
-        contents\!](#theyll-all-show-up-in-the-table-of-contents)
-  - [There’s also plots and tables all
+    -   [They’ll all show up in the table of
+        contents!](#theyll-all-show-up-in-the-table-of-contents)
+-   [There’s also plots and tables all
     around](#theres-also-plots-and-tables-all-around)
-  - [Another cool option is doing code
+-   [Another cool option is doing code
     folding](#another-cool-option-is-doing-code-folding)
-      - [Like this\!](#like-this)
-      - [gt tables in github\_document](#gt-tables-in-github_document)
+-   [Rendering Latex](#rendering-latex)
 
 <br>
 
@@ -27,7 +26,7 @@ source("../passwords.R") # never post your passwords to Github again!
 
 <br>
 
-## They’ll all show up in the table of contents\!
+## They’ll all show up in the table of contents!
 
 <br>
 
@@ -43,8 +42,8 @@ plot(mtcars$mpg, mtcars$cyl)
 pandoc.table(head(mtcars[, 1:4]))
 ```
 
-|                       | mpg  | cyl | disp | hp  |
-| :-------------------: | :--: | :-: | :--: | :-: |
+|                       | mpg  | cyl | disp | hp  |
+|:---------------------:|:----:|:---:|:----:|:---:|
 |     **Mazda RX4**     |  21  |  6  | 160  | 110 |
 |   **Mazda RX4 Wag**   |  21  |  6  | 160  | 110 |
 |    **Datsun 710**     | 22.8 |  4  | 108  | 93  |
@@ -57,12 +56,12 @@ pandoc.table(head(mtcars[, 1:4]))
 # Another cool option is doing code folding
 
 <details>
-
-<summary>SOME CODE</summary>
-
+<summary>
+SOME CODE
+</summary>
 <p>
 
-#### Like this\!
+#### Like this!
 
 ``` r
 print("source: https://gist.github.com/joyrexus/16041f2426450e73f5df9391f7f7ae5f")
@@ -71,60 +70,23 @@ print("source: https://gist.github.com/joyrexus/16041f2426450e73f5df9391f7f7ae5f
     ## [1] "source: https://gist.github.com/joyrexus/16041f2426450e73f5df9391f7f7ae5f"
 
 </p>
-
 </details>
 
-## gt tables in github\_document
+# Rendering Latex
 
-I’ve also found a nice workaround to incorporate tables from the **gt**
-package.
-
-You can create the table object:
+You can render Latex on a github document by specifying in the YAML
+header:
 
 ``` r
-# Define the start and end dates for the data range
-start_date <- "2010-06-07"
-end_date <- "2010-06-14"
-
-# Create a gt table based on preprocessed
-# `sp500` table data
-
-a = sp500 %>%
-  dplyr::filter(date >= start_date & date <= end_date) %>%
-  dplyr::select(-adj_close) %>%
-  gt() %>%
-  tab_header(
-    title = "S&P 500",
-    subtitle = glue::glue("{start_date} to {end_date}")
-  ) %>%
-  fmt_date(
-    columns = vars(date),
-    date_style = 3
-  ) %>%
-  fmt_currency(
-    columns = vars(open, high, low, close),
-    currency = "USD"
-  ) %>%
-  fmt_number(
-    columns = vars(volume),
-    suffixing = TRUE
-  ) 
+output:
+  github_document:
+    pandoc_args: --webtex
 ```
 
-And then at some point you can also view it using the `gt::gtsave`
-function:
+Here’s an example:
 
-``` r
-gtsave(a, "try.png")
-```
-
-![](README_files/figure-gfm/show%20gt%20table-1.png)<!-- -->
-
-We next remove the resulting pic:
-
-``` r
-invisible(file.remove("try.png"))
-```
-
-It’s a little shorter and easier to implement then inserting the
-resulting pic using standard markdown.
+![
+X \\sim \\mathcal{N}(\\mu,\\sigma^2) \\rightarrow f(x)= \\frac{1}{\\sigma \\sqrt{2\\pi}}e^{-\\frac{1}{2}\\left(\\frac{x-\\mu}{\\sigma}\\right)^2}
+](https://latex.codecogs.com/png.latex?%0AX%20%5Csim%20%5Cmathcal%7BN%7D%28%5Cmu%2C%5Csigma%5E2%29%20%5Crightarrow%20f%28x%29%3D%20%5Cfrac%7B1%7D%7B%5Csigma%20%5Csqrt%7B2%5Cpi%7D%7De%5E%7B-%5Cfrac%7B1%7D%7B2%7D%5Cleft%28%5Cfrac%7Bx-%5Cmu%7D%7B%5Csigma%7D%5Cright%29%5E2%7D%0A "
+X \sim \mathcal{N}(\mu,\sigma^2) \rightarrow f(x)= \frac{1}{\sigma \sqrt{2\pi}}e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}
+")
