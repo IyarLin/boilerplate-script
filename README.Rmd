@@ -19,7 +19,8 @@ pacman::p_load(char = c(
   "tidyverse", # best thing that happend to me
   "dbplyr", # dplyr syntax for DB query
   "data.table", # only way to run grouped calculations on tons of groups
-  "pander" # pretty table rendering
+  "pander", # pretty table rendering
+  "gt" # event prettier tables
 ))
 ```
 
@@ -48,6 +49,15 @@ pandoc.table(head(mtcars[, 1:4]))
 ```
 
 <br>
+
+## gt tables
+
+You can also include tables using the powerful `gt` package:
+
+```{r}
+as_raw_html(gt(head(mtcars[, 1:4])))
+```
+
 
 # Another cool option is doing code folding
 
